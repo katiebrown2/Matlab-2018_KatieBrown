@@ -43,8 +43,5 @@ linspace(10,-4,8)
 vect4=10:-2:-4
 linspace(0,5*pi,6)
 vect5=0:pi:5*pi
-str='aaaaaaaaaaaaaaaaaaaa'
-str(3:3:20)=['c']
-str(2:3:20)=['b']
-str([4:6 10:12)=['d' 'e' 'f' 'd' 'e' 'f']
-
+str=aaaaaaaaaaaaaaaaaaaa
+id3=3:end
