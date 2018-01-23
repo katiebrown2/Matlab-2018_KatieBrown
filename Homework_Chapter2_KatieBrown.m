@@ -11,6 +11,9 @@ str([3 11])='LP'
 str='It s pouring with rain'
 str([6 9 19])='rpp'
 % c) Now try to do this for both a) and b) in a single line of code.
+
+% Oh, I meant a line of code each, which you did already
+
 str='A PACK OF LIES It is pouring rain';
 str([3 11 22 25 30])='LPrpp'
  
@@ -26,6 +29,9 @@ str = 'nosey little cook';
 % you get:         cosy little nook
 % (Hint, write the phrase "nosey little cook" on a piece of paper and number each letter)
 id1=[14 2:13 1 15:17];
+% technically, there isn't an e in cosy
+id1 = [14 2 3 5:12 6 1 2 2 17];
+
 disp(str(id1))
 %% Q 2.3: Creating vectors.
  
@@ -92,10 +98,10 @@ happyvect=(stimlist([5:8 13:16]))
 resplist='ssshhhshsshhsssh';
 
 % c) Create strings stimlisthappy and resplisthappy that contain the values in stimlist and resplist when happy music was playing
-stimlisthappy=happyvect
-resplisthappy=resplist([5:8 13:16])
+stimlisthappy=stimlist(happyvect);
+resplisthappy=resplist(happyvect); % was correct the way you did it, this is just a but more elegant
 % d) Find out which stimulus was being presented on the 3rd happy music trial.
 disp(stimlisthappy(3))
 % e) Find out which responses were made on the 3rd, 4th and 5th sad music trial.
-resplistsad=resplist([1:4 9:12]);
+resplistsad=resplist(sadvect);
 disp(resplistsad([3 4 5]))
