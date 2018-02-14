@@ -197,13 +197,14 @@ end
 % The program should count the number of rolls until
 % the sum of the four dice is equal to 20.
 
-count=1; 
-roll=ceil(rand(1:4)*6);
+% I assumed at some point you want your computer back :-)
+count=0; % otherwise we end up miscounting by 1 
+roll=sum(ceil(rand(1:4)*6));
 while sum(roll) ~= 20
     count = count+1;
-    roll=ceil(rand(1:4)*6);
+    roll=sum(ceil(rand(1:4)*6));
 end
-disp(['Sum of dice equals 20 after', num2str(count),' rolls.']);
+disp(['Sum of dice equals 20 after ', num2str(count),' rolls.']);
 
 
 
@@ -229,7 +230,7 @@ all=[men ;women];
 % if there was no genuine height difference
 for r=1:1000
     % stir the cauldron
-    all=shuffle(all);
+    all=all(randperm(length(all)));
     % assume first 20 are men, second 20 are women
     m_men(r)=mean(all(1:nsub));
     m_women(r)=mean(all(nsub+1:end));
