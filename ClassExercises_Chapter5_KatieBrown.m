@@ -100,6 +100,8 @@ end
          end
      end
  end
+ 
+ 
  cmap=gray((4*choicethreshold)+1);
  cmap(1,:)=[1 0 0];
  cmap(end, :)=[0 1 0];
