@@ -32,6 +32,11 @@
 clear all
 
 
+% check this, was inconsistent in your code (I think you had two switches
+% so it plotted right!
+tremor= 1:4;
+nontremor=5:8;
+
 sub1= [60, 75, 261, 3, 1]
 sub2=[72, 70, 266, 8, 1]
 sub3=[56, 80, 273, 2, 1]
@@ -48,49 +53,53 @@ data=[sub1;sub2;sub3;sub4;sub5;sub6;sub7;sub8]
 mean(data(:,3))
 
 % calculate average # of syllables per second, by subject
-syllablepersec1=data(1,3) / data(1,2);
-syllablepersec2=data(2,3) / data(2,2);
-syllablepersec3=data(3,3) / data(3,2);
-syllablepersec4=data(4,3) / data(4,2);
-syllablepersec5=data(5,3) / data(5,2);
-syllablepersec6=data(6,3) / data(6,2);
-syllablepersec7=data(7,3) / data(7,2);
-syllablepersec8=data(8,3) / data(8,2);
-
-syllablespersec=[syllablepersec1, syllablepersec2, syllablepersec3, syllablepersec4, syllablepersec5, syllablepersec6, syllablepersec7, syllablepersec8];
-%plot syllables per second, by subject
+for s=1:size(data, 1)
+syllablespersec(s)=data(s,3) / data(s,2);
+end
 
 x=syllablespersec
 y=1:8
-scatter(x,y)
-
+scatter(syllablespersec,y) % should this be the other way around
 
 %find average number of pauses, between groups
-AvgTremorPause=mean(data(5:8,1))
-AvgNonTremorPause=mean(data(1:4,1))
+AvgTremorPause = mean(data(tremor,1));
+AvgTremorPauseSTE=std(data(tremor,1))/sqrt(length(tremor));
 
+AvgNonTremorPause = mean(data(nontremor,1))
+AvgNonTremorPauseSTE=std(data(nontremor,1))/sqrt(length(nontremor));
 
 %find average number of dysfluencies, between groups
-AvgTremorDysfluencies=mean(data(5:8,4))
-AvgNonTremorDysfluencies=mean(data(1:4,4))
-
+AvgTremorDysfluencies = mean(data(tremor,4));
+AvgTremorDysfluenciesSTE=std(data(tremor,4))/sqrt(length(tremor));
+AvgNonTremorDysfluencies = mean(data(nontremor,4));
+AvgNonTremorDysfluenciesSTE=std(data(nontremor,4))/sqrt(length(nontremor));
 
 %plot average pauses, between groups
 
-figure
+figure(1); clf 
 subplot(2,1,1)
-c=categorical({'tremor', 'non-tremor'});
-avgpausetime=[AvgTremorPause AvgNonTremorPause]
-bar(c,avgpausetime, 'FaceColor', [0 0.5 0.5], 'LineWidth', .1, 'BarWidth', .5, 'EdgeColor',['0 0 0'])
+avgpausetime=[AvgTremorPause AvgNonTremorPause];
+avgpausetimeSTE=[AvgTremorPauseSTE AvgNonTremorPauseSTE];
+
+% so you had a bug in here where the tremor and the non-tremor were
+% miscategorized!
+bar(1:2,avgpausetime, 'FaceColor', [0 0.5 0.5], 'LineWidth', .1, 'BarWidth', .5, 'EdgeColor',['0 0 0']);hold on
+e=errorbar(1:2,avgpausetime, avgpausetimeSTE);
+set(e, 'LineStyle', 'none', 'Color', 'k')
+set(gca, 'XTickLabel', {'tremor', 'non-tremor'});
 title('Subplot 1')
 
+
 %plot average number of dysfluencies, between groups as a subplot
-
-
 subplot(2,1,2)
 d=categorical({'tremor', 'non-tremor'});
-dysfluencies=[AvgTremorDysfluencies AvgNonTremorDysfluencies]
-bar(c,dysfluencies, 'FaceColor', [0 0.5 0.5], 'LineWidth', .1, 'BarWidth', .5, 'EdgeColor',['0 0 0'])
+dysfluencies=[AvgTremorDysfluencies AvgNonTremorDysfluencies];
+dysfluenciesSTE=[AvgTremorDysfluenciesSTE AvgNonTremorDysfluenciesSTE];
+
+bar(1:2,dysfluencies, 'FaceColor', [0 0.5 0.5], 'LineWidth', .1, 'BarWidth', .5, 'EdgeColor',['0 0 0']); hold on
+e=errorbar(1:2,dysfluencies, dysfluenciesSTE);
+set(e, 'LineStyle', 'none', 'Color', 'k')
+set(gca, 'XTickLabel', {'tremor', 'non-tremor'});
 title('Subplot 2')
 
 
